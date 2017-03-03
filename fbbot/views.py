@@ -33,7 +33,7 @@ def ExamBatch(vimessage):
             else:
                 checkpt = 'spotbuy'
             rateinfo = json.loads(ReadFromStatic(ii['ccy']))
-            print json.dumps(rateinfo,encoding="UTF-8", ensure_ascii=False)
+            #print json.dumps(rateinfo,encoding="UTF-8", ensure_ascii=False)
             for b in rateinfo:
                 if b['bankname'].strip() == ii['bank'].strip():
                     print 'BS:' + str(ii['BS']) 
