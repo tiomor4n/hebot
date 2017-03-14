@@ -7,6 +7,9 @@ from .models import Greeting
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
+	
+def subscribe(request):
+    return render(request,'subscribe.html')
 
 
 def db(request):

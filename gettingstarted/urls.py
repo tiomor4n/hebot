@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^db', hello.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^fbbot/', include('fbbot.urls')),
+	url(r'^subscribe', hello.views.subscribe, name='subscribe'),
 ]

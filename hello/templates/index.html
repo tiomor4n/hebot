@@ -1,58 +1,271 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+<html>
+<head>
+    <title>連結到LineNotify</title>
+	<meta charset="big-5" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type='text/javascript'>
+        function oAuth2() {
+            
+            var strEmail =  document.getElementById("emailsc").value
+            var emailRule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+ 
+            //validate ok or not
+            if(strEmail.search(emailRule)!= -1){
+                alert("email正確"); 
+            }else{
+                showAlert();
+            }
+            
+            
+		    var vemail = document.getElementById("emailsc").value
+            var URL = 'https://notify-bot.line.me/oauth/authorize?';
+            URL += 'response_type=code';
+            URL += '&client_id=nch5lTjwJmgdHwx5Ar4oaJ';
+            URL += '&redirect_uri=https://test-pro-tiomor4n.c9.io/index/';
+            URL += '&scope=notify';
+            URL += '&state=';
+			URL += vemail;
+            //window.location.href = URL;
+			alert(URL);
+        }
+        
+        function showAlert(){
+            $("#myAlert").addClass("in")
+        }
+        
+        function teststart(){
+            document.getElementById("linecode").value = 'test';
+        }
+        document.ready(showemail);
+        
+        function showemail(){
+            document.getElementById("email").value =  getParameterByName('state',window.location);
+        }
+        
+        function showcode(){
+              document.getElementById("mytextbox").value = getParameterByName('code',window.location);
+        };
+        
+        function getParameterByName(name, url) {
+            if (!url) {
+                url = window.location.href;
+            }
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+        (window).scroll(function() {
+            (".slideanim").each(function(){
+                var pos = (this).offset().top;
+                var winTop = (window).scrollTop();
+                if (pos < winTop + 600) {
+                    (this).addClass("slide");
+                }
+             });
+        });
+        
+    </script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+	    .jumbotron { 
+                     background-color: #f4511e; /* Orange */
+                     color: #ffffff;
+		}
+		.logo {
+                     font-size: 200px;
+        }
+        @media screen and (max-width: 768px) {
+        .col-sm-4 {
+                     text-align: center;
+                     margin: 25px 0;
+        }
+        }
+        .container-fluid {
+                     padding: 60px 50px;
+        }
+        .slideanim {visibility:hidden;}
+        .slide {
+                 /* The name of the animation */
+                 animation-name: slide;
+                 -webkit-animation-name: slide; 
+                 /* The duration of the animation */
+                 animation-duration: 1s; 
+                 -webkit-animation-duration: 1s;
+                 /* Make the element visible */
+                 visibility: visible; 
+         }
+ 
+/* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+@keyframes slide {
+    0% {
+        opacity: 0;
+        transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    } 
+}
+@-webkit-keyframes slide {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(70%);
+    } 
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+    }
+}
+    .navbar {
+    margin-bottom: 0;
+    background-color: #f4511e;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+}
 
-{% block content %}
+.navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+}
 
-<div class="jumbotron text-center">
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #f4511e !important;
+    background-color: #fff !important;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+	</style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
-    <a href="/" class="lang-logo">
-      <img src="{% static 'lang-logo.png'%}">
-    </a>
-    <h1>Getting Started with Python on Heroku</h1>
-    <p>This is a sample Python application deployed to Heroku. It's a reasonably simple app - but a good foundation for understanding how to get the most out of the Heroku platform.</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-python"><span class="glyphicon glyphicon-flash"></span> Getting Started with Python</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/python-getting-started"><span class="glyphicon glyphicon-download"></span> Source on GitHub</a>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
+      <a class="navbar-brand" href="#">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#subscribe">SUBSCRIBE</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </div>
   </div>
-</div>
-<div class="container">
-  <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
-  </div>
-  <hr>
+</nav>
+    <div id="myPage" class="jumbotron text-center" >
+	    <h1>訂閱RateAnyWhere Line Notify<h1>
+		<p>訂閱屬於你的匯率通知</p>
+		
+	</div>
+	
+	<div id="about" class="container">
+    	<div class="row">
+	        <div class="container-fluid">
+	            <div class="col-sm-8">
+	                <h2>即時通知訊息</h2>
+	                <p>讓你即時知道想知道的匯率資訊</p>
+	            </div>     
+	            <div class="col-sm-4">
+	                <span class="glyphicon glyphicon-time logo"></span>
+	            </div>
+	        </div><!--class="container-fluid"-->
+	    </div>
+    
+	<div class="container-fluid bg-grey">
+		<div class="row">
+			<div class="col-sm-8">
+				<h2>貼近你的使用</h2>
+				<p>使用你最熟悉的媒介通知訊息</p>
+			</div>
+			<div class="col-sm-4">
+				<span class="glyphicon glyphicon-phone logo"></span> 
+			</div>
+		</div>
+	</div>
+	<div id="subscribe" class="container">
+	    <div class="row">
+	        <div class="col-sm-12 text-center">
+	           <h2>馬上訂閱</h2>
+	        </div>  
+	    </div>  
+	    <div class="col-sm-12 text-center">    
+	       <form class="form-inline">
+                <div class="input-group">
+				    <input type="email" id="emailsc" class="form-control" size="50" placeholder="Email Address" required>
+			        <div class="input-group-btn">
+                        <button type="button" class="btn btn-danger" onclick="oAuth2();">Subscribe</button>
+                   </div>
+                </div>
+                
+            </form>
+            <div div id="myAlert" class="alert alert-danger fade" data-alert="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                email輸入錯誤
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACT</h2>
   <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> How this sample app works</h3>
-      <ul>
-        <li>This app was deployed to Heroku, either using Git or by using <a href="https://github.com/heroku/python-getting-started">Heroku Button</a> on the repository.</li>
-
-        <li>When Heroku received the source code, it fetched all the dependencies in the <a href="https://github.com/heroku/python-getting-started/blob/master/requirements.txt">requirements.txt file</a>, creating a deployable slug.</li>
-        <li>The platform then spins up a dyno, a lightweight container that provides an isolated environment in which the slug can be mounted and executed.</li>
-        <li>You can scale your app, manage it, and deploy over <a href="https://addons.heroku.com/">150 add-on services</a>, from the Dashboard or CLI.</li>
-      </ul>
+    <div class="col-sm-5">
+      <p>如有意見可回饋給我們!</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> tiomor4n@gmail.com</p> 
     </div>
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-link"></span> Next Steps</h3>
-      <ul>
-        <li>If you are following the <a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started</a> guide, then please head back to the tutorial and follow the next steps!</li>
-        <li>If you deployed this app by deploying the Heroku Button, then in a command line shell, run:</li>
-        <ul>
-          <li><code>git clone https://github.com/heroku/python-getting-started.git</code> - this will create a local copy of the source code for the app</li>
-          <li><code>cd python-getting-started</code> - change directory into the local source code repository</li>
-          <li><code>heroku git:remote -a &lt;your-app-name></code> - associate the Heroku app with the repository</li>
-          <li>You'll now be set up to run the app locally, or <a href="https://devcenter.heroku.com/articles/getting-started-with-python#push-local-changes">deploy changes</a> to Heroku</li>
-        </ul>
-      </ul>
-      <h3><span class="glyphicon glyphicon-link"></span> Helpful Links</h3>
-      <ul>
-        <li><a href="https://www.heroku.com/home">Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/">Heroku Dev Center</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started with Python on Heroku</a></li>
-        <li><a href="https://devcenter.heroku.com/articles/django-app-configuration">Configuring Django Apps for Heroku</a></li>
-      </ul>
+    <div class="col-sm-7">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="emailcont" name="emailcont" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" type="submit">Send</button>
+        </div>
+      </div> 
     </div>
-  </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
   </div>
 </div>
-{% endblock %}
+    </div>
+    <footer class="container-fluid text-center">
+        <a href="#myPage" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+        <p>Bootstrap Theme Made By <a href="https://www.w3schools.com" title="Visit w3schools">www.w3schools.com</a></p> 
+     </footer>
+    </div><!--class="container"-->
+</body>
+</html>
