@@ -6,6 +6,7 @@ class EmailVerify(models.Model):
     email = models.CharField(max_length=20)
     verify= models.BooleanField(default=False)
     token = models.CharField(max_length=45,default='')
+	msgcnt = models.IntegerField(default=0)
 
 class LineInformList(models.Model):
     email = models.CharField(max_length=20)
