@@ -6,21 +6,16 @@
 <li><a href="/index/">回到首頁</a></li>
 {% endblock %}
 
-
-
-	
-			<div class="well well-lg">
-                  <form action=""  method="post" class="form-group">{% csrf_token %}
-	                  {{ form.as_p }}
-	                  <button type="submit" class="button">Sign up</button>
-	                  <br>
-	              </form>
-			</div>
-
-			
+{% block container %}
+  <section id='container'>
+  	<p>
+    <div class=container>	
 		
-	
-  	
-
-
-
+       <form action=""  method="post" class="form-group">{% csrf_token %}
+       {{ form.as_p }}
+           <button type="submit" class="button">Sign up</button>
+           <br>
+       </form>
+		</div>	
+  </section>
+{% endblock %}
