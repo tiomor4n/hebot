@@ -1,32 +1,63 @@
 {% extends 'base.html' %}
-
+    {% load static %}
 {% block title %}歡迎使用Line Notify{% endblock %}
 
+    {% block banner %}
+    <section id="banner" style="background: url('{% static './images/banner.jpg' %}')">
+		  <div class="inner">
+			  <header>
+			  	<h1>訂閱你的匯率通知</h1>
+			  	<p>每天幫你確認最新的匯率情況</p><br/><p>以最即時的方式通知你</p>
+		  	</header>
+			  <a href=/index/ class="button big scrolly">Learn More</a>
+		  </div>
+  	</section>
+  	{% endblock %} 
+
 {% block container %}
-<div id="about" class="container">
-    	<div class="row">
-	        <div class="container-fluid">
-	            <div class="col-sm-8">
-	                <h2>即時通知訊息</h2>
-	                <p>讓你即時知道想知道的匯率資訊</p>
-	            </div>     
-	            <div class="col-sm-4">
-	                <span class="glyphicon glyphicon-time logo"></span>
-	            </div>
-	        </div><!--class="container-fluid"-->
-	    </div>
-    
-	<div class="container-fluid bg-grey">
-		<div class="row">
-			<div class="col-sm-8">
-				<h2>貼近你的使用</h2>
-				<p>使用你最熟悉的媒介通知訊息</p>
-			</div>
-			<div class="col-sm-4">
-				<span class="glyphicon glyphicon-phone logo"></span> 
-			</div>
-		</div>
-	</div>
+
+<div id="main">
+  <!-- Section -->
+					<section class="wrapper style1">
+						<div class="inner">
+							<!-- 2 Columns -->
+								<div class="flex flex-2">
+									<div class="col col1">
+										<div class="image round fit">
+											<a href="generic.html" class="link"><img src="{% static './images/pic01.jpg' %}" alt="" /></a>
+										</div>
+									</div>
+									<div class="col col2">
+										<h3>測試標題一</h3>
+										<p>內文一</p>
+										<p>內文2</p>
+										<a href="#" class="button">Learn More</a>
+									</div>
+								</div>
+						</div>
+					</section>
+		<!-- Section -->
+					<section class="wrapper style2">
+						<div class="inner">
+							<div class="flex flex-2">
+								<div class="col col2">
+									<h3>測試標題2</h3>
+									<p>內文一</p>
+									<p>內文2</p>
+									<a href="#" class="button">Learn More</a>
+								</div>
+								<div class="col col1 first">
+									<div class="image round fit">
+										<a href="#" class="link"><img src="{% static './images/pic02.jpg' %}" alt="" /></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+</div>  
+
+
+
 	<div id="subscribe" class="container">
 	    <div class="row">
 	        <div class="col-sm-12 text-center">
@@ -49,39 +80,42 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-grey">
-  <h2 class="text-center">CONTACT</h2>
-  <div class="row">
-    <div class="col-sm-5">
-      <p>如有意見可回饋給我們!</p>
-      <p><span class="glyphicon glyphicon-envelope"></span> tiomor4n@gmail.com</p> 
-    </div>
-    <div class="col-sm-7">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+
+
+<section class='container'>
+  <h2 class="text-center">回饋您的意見!</h2>
+		<form action="#" method='post'>
+			<div class= 'row uniform'>
+				<div class="4u 12u$(small)">
+          <input id="name" name="name" placeholder="name" type="text" required>
         </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="emailcont" name="emailcont" placeholder="Email" type="email" required>
+				<div class="8u$ 12u$(small)">
+          <input id="email" name="email" placeholder="email" type="text" required>
         </div>
-      </div>
-      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-      <div class="row">
-        <div class="col-sm-12 form-group">
-          <button class="btn btn-default pull-right" type="submit">Send</button>
-        </div>
-      </div> 
-    </div>
-  </div>
-</div>
-    </div>
+						
+				
+				
+				<div class="12u$">
+           <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+       </div>
+     
+       
+	     <div class="12u$">
+			     <input type='submit' value='learn more' class='fit'></button>
+	     </div>
+				
+					</div>
+					</form>
+						 
+					</section>
+
+
+    
 {% endblock %}
 
 {% block footer %}
 <footer class="container-fluid text-center">
-        <a href="#myPage" title="To Top">
-            <span class="glyphicon glyphicon-chevron-up"></span>
-        </a>
-        <p>回到頁首</p> 
-     </footer>
+   <p>design by tiomor4n</p>
+   <p><span class="glyphicon glyphicon-envelope"></span> tiomor4n@gmail.com</p>
+</footer>
 {% endblock %}

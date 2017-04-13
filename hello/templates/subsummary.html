@@ -6,7 +6,12 @@
 <li><a href="/index/">回到首頁</a></li>
 {% endblock %}
 
+{% block script %}
+
+{% endblock %}
+
 {% block container %}
+<secton id="container">
 <div class="container">
     <p><h2>{{request.user}} 您好,以下是你的訂閱通知內容:</h2></p>
     
@@ -17,6 +22,8 @@
         <th>幣別</th>
         <th>B/S</th>
         <th>目標匯率</th>
+        <th>本日通知</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +32,39 @@
         <td>{{ L.ccy }}</td>
         <td>{{ L.BS }}</td>
         <td>{{ L.exrate }}</td>
-        <td><a href="/subscribe/?id={{ L.id }}"><button type="button" class="btn btn-danger">修改</button></a></td>
+        <td><input type="checkbox" id="A{{ L.id }}"
+            {% if L.stoptoday == 'V'  %}
+            checked
+            {% endif %}
+            data-toggle="toggle" data-on="開啟" data-off="關閉" data-width="75" data-height="35" data-onstyle="primary"/>
+        <script>
+        /*global $*/
+        
+            function runPyScript(TF){
+                var jqXHR = $.ajax({
+                     type: "GET",
+                     url: "/stoptoday?id={{ L.id }}&TF=" + TF,
+                     async: false,
+                    
+                });
+
+               return jqXHR.responseText;
+            }  
+            
+           
+            
+                  $('#A{{ L.id }}').change(function() {
+                    alert($(this).prop('checked'))  
+                    var TF = $(this).prop('checked')
+                    console.log(TF)
+                    result = runPyScript(TF);
+                    console.log('Got back ' + result);
+                    
+                  })
+         
+        </script>
+        </td>
+        <td><a href="/subscribe/?id={{ L.id }}" class="button">修改</a></td>
       </tr>
       {% endfor %}
     </tbody>
@@ -35,11 +74,18 @@
   {% endif%}
   
   {% if ldata|length < 5 %}
-     <a href="/subscribe/"><button type="button" class="btn btn-danger">新增資料</button></a>
+     <a href="/subscribe/" class="button">新增資料</a>
   {% else %}
   <h1>已達上限5筆</h1>
   {% endif %}
+  
+  {% if subtoken %}
+  <br>
+  <a href="/GetLineNotify/" class="button alt">連結Line訂閱</a>
+  {% endif %}
+  <br>
 
   
 </div>
+</section>
 {% endblock %}

@@ -3,14 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpRequest
 from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,redirect
 from django.http import HttpResponseRedirect
 from django.contrib import auth 
 from subscribe.models import LineInformList,EmailVerify
 from crawer import ReadFromStaticBank,WriteToStatic,BKTWDataPipe
-from subscribe.LineNotify import sendmsg
+from subscribe.LineNotify import sendmsg,GetToken
 from subscribe.utility import getTimeStamp,GetShortUrl
-from subscribe.forms import subscribeForm
+from subscribe.forms import subscribeForm,YourSignupForm
 import json
 
 def findCCY(vccy):
@@ -23,8 +23,10 @@ def findCCY(vccy):
         'GBP':u'英鎊',
         'SGD':u'新加坡幣',
         'JPY':u'日幣',
-        'KRW':u'韓圜'
-    }
+        'KRW':u'韓圜',
+        'DEL':u'刪除',
+        'INT':u'請輸入'
+	}
     return ccydict[vccy]
 
 def batchOP():
@@ -86,8 +88,14 @@ def batchOP():
 
 def subsummary(request):
     if request.user.is_authenticated():
-        uemail = request.user.username
+        uemail = request.user.email
         ldata = LineInformList.objects.filter(email=uemail)
+        EV = ldata[0].emailverify
+        if EV.token == '':
+            subtoken = False
+        else:
+            subtoken = True
+        print EV.token
         for l in ldata:
             l.ccy = findCCY(l.ccy)
             if l.BS == 'B':
@@ -131,7 +139,16 @@ def logout(request):
     auth.logout(request)
     return render_to_response('login.html') 
     
-    
+def register(request):
+    if request.method == 'POST':
+        form = YourSignupForm(request.POST)
+        if form.is_valid():
+            user = form.save(request)
+            #send_email_confirmation()
+            return HttpResponseRedirect('/login/')
+    else:
+        form = YourSignupForm()
+    return render_to_response('register.html',locals())
 
 def InsertLineInfo(request):
     if request.user.is_authenticated(): 
@@ -170,11 +187,59 @@ def InsertLineInfo(request):
             #return render_to_response('subsummary.html',locals())
 
 def stoptoday(request):
-    if 'id' in request.GET and request.GET['id'] != '':
-        singleL = LineInformList.object.get(id = request.GET['id'])
-        singleL.stoptoday = 'V'
-        return HttpResponseRedirect('/stoptoday/')
+    import sys
+    try:
+        if 'id' in request.GET and request.GET['id'] != '':
+            singleL = LineInformList.objects.get(id = request.GET['id'])
+            print 'id:' + str(request.GET['id'])
+            print 'TF:' + str(request.GET['TF'])
+            if request.GET['TF'] == 'true':
+                singleL.stoptoday = 'X'
+            else:
+                singleL.stoptoday = 'V'
+            singleL.save()
+            return HttpResponse('correct')
+    except ValueError:
+        pass
+        
+        
+def GetLineNotify(request):
+    if request.user.is_authenticated(): 
+        uemail = request.user.email
+        print uemail
+        URL = 'https://notify-bot.line.me/oauth/authorize?'
+        URL += 'response_type=code'
+        URL += '&client_id=nch5lTjwJmgdHwx5Ar4oaJ'
+        URL += '&redirect_uri=https://rate-notify-tiomor4n.c9users.io/gettokenfromcode'
+        URL += '&scope=notify'
+        URL += '&state=' + str(uemail)
+        print URL
+        return redirect(URL)
+        
+def GetTokenFromCode(request):
+    #print request.GET['state']
+    #print request.GET['code']
+    uemail = request.GET['state']
+    strcode = request.GET['code']
+    reply = GetToken(strcode)
+    print 'reply:' + reply
+    if reply != '':
+        print 'okok'
+        
+        replyjs = json.loads(reply)
+        tokenstr = replyjs['access_token']
+        print 'tokenstr:' + tokenstr
+        
+        EV = EmailVerify.objects.get(email=uemail)
+        EV.token = tokenstr
+        EV.save()
+        
+        sendmsg(tokenstr,'你好，歡迎使用RateAnyWhere服務')
+        
+    return render_to_response('GetTokenFromCode.html') 
     
+def templateIndex(request):
+    return render_to_response('templateIndex.html') 
         
     
     

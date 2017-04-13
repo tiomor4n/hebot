@@ -1,163 +1,12 @@
-<html>
-<head>
-    <title>連結到LineNotify</title>
-	<meta charset="big-5" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type='text/javascript'>
-        function oAuth2() {
-		    var vemail = document.getElementById("emailsc").value
-            var URL = 'https://notify-bot.line.me/oauth/authorize?';
-            URL += 'response_type=code';
-            URL += '&client_id=nch5lTjwJmgdHwx5Ar4oaJ';
-            URL += '&redirect_uri=https://rate-notify-tiomor4n.c9.io/subscribe/';
-            URL += '&scope=notify';
-            URL += '&state=';
-			URL += vemail;
-            //window.location.href = URL;
-			alert(URL);
-        }
-        
-        function teststart(){
-            document.getElementById("linecode").value = 'test';
-        }
-        document.ready(showemail);
-        
-        function showemail(){
-            document.getElementById("email").value =  getParameterByName('state',window.location);
-        }
-        
-        function showcode(){
-              document.getElementById("mytextbox").value = getParameterByName('code',window.location);
-        };
-        
-        function getParameterByName(name, url) {
-            if (!url) {
-                url = window.location.href;
-            }
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
-        
-    </script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<style>
-	    .jumbotron { 
-                     background-color: #f4511e; /* Orange */
-                     color: #ffffff;
-		}
-		.logo {
-                     font-size: 200px;
-        }
-        @media screen and (max-width: 768px) {
-        .col-sm-4 {
-                     text-align: center;
-                     margin: 25px 0;
-        }
-        }
-        .container-fluid {
-                     padding: 60px 50px;
-        }
-        .slideanim {visibility:hidden;}
-        .slide {
-                 /* The name of the animation */
-                 animation-name: slide;
-                 -webkit-animation-name: slide; 
-                 /* The duration of the animation */
-                 animation-duration: 1s; 
-                 -webkit-animation-duration: 1s;
-                 /* Make the element visible */
-                 visibility: visible; 
-         }
- 
-/* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
-@keyframes slide {
-    0% {
-        opacity: 0;
-        transform: translateY(70%);
-    } 
-    100% {
-        opacity: 1;
-        transform: translateY(0%);
-    } 
-}
-@-webkit-keyframes slide {
-    0% {
-        opacity: 0;
-        -webkit-transform: translateY(70%);
-    } 
-    100% {
-        opacity: 1;
-        -webkit-transform: translateY(0%);
-    }
-}
-    .navbar {
-    margin-bottom: 0;
-    background-color: #f4511e;
-    z-index: 9999;
-    border: 0;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    border-radius: 0;
-}
+{% extends 'base.html' %}
+    {% load static %}
+{% block title %}歡迎使用Line Notify{% endblock %}
 
-.navbar li a, .navbar .navbar-brand {
-    color: #fff !important;
-}
-
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #f4511e !important;
-    background-color: #fff !important;
-}
-
-.navbar-default .navbar-toggle {
-    border-color: transparent;
-    color: #fff !important;
-}
-
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-  -moz-transition: opacity 0.15s linear;
-  -o-transition: opacity 0.15s linear;
-  transition: opacity 0.15s linear;
-}
-.fade.in {
-  opacity: 1;
-}
-	</style>
-	</style>
-</head>
-<body>
+{% block container %}
     
-     <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> 
-      </button>
-      <a class="navbar-brand" href="#">Logo</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/index/">Index</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<secton id="container" style="background: url('{% static './images/register_1.jpg' %}">
     <div class="jumbotron text-center" >
-	    <h1>訂閱RateAnyWHere Line Notify<h1>
-		<p>訂閱屬於你的匯率通知</p>
+	    <h2>訂閱RateAnyWHere Line Notify<h2>
 	</div>
 	<div class="container">
 	<div class="well well-lg">
@@ -171,9 +20,9 @@
             <input id="password" type="password" class="form-control" name="password" placeholder="Password">
         </div>
         <br>
-        <button type="submit" class="btn btn-default">Sign in</button>
+        <button type="submit" class="button">Sign in</button>
     </form>
     </div>
     </div>
-</body>
-</html>
+</section>
+{% endblock %}

@@ -8,7 +8,7 @@ def GetToken(code):
                       data={
                           "grant_type":"authorization_code",
                           "code":code,
-                          "redirect_uri":"https://test-pro-tiomor4n.c9.io/index/",
+                          "redirect_uri":"https://rate-notify-tiomor4n.c9users.io/gettokenfromcode",
                           "client_id":"nch5lTjwJmgdHwx5Ar4oaJ",
                           "client_secret":"8S6f5tHE1HqE9he2sJW5CrZbHCMn6NbMZadr291111q"
                       },
